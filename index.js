@@ -160,7 +160,7 @@ Freaky Maciej
         message.reply(':nerd: :repeat:');
     }
     if (message.content.startsWith('!eval')) {
-        if (message.author.id === '592017236361871363' || message.author.id === '1076212139729092648') return;
+        if ((message.author.id === '592017236361871363' && message.content.toLowerCase().includes('message')) || (message.author.id === '1076212139729092648' && message.content.toLowerCase().includes('message'))) return;
         const code = message.content.slice(6);
         try {
             let result = await eval(code);
