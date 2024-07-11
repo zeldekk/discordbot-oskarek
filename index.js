@@ -15,7 +15,7 @@ client.on('ready', () => {
     client.user.setActivity({
         name: 'Brawl Stars'
     })
-})
+});
 
 const bociki = ["Szymon Bialik [9/11]", "Justyna Czakańska [8/11]", "Karolina Michalik [10/11]", "Katarzyna Węgrzyn [9/11]", "Magda Kiljańska [5/11]", "Oliwia Rojek [7/11]", "Maciej Macura [9/11]", "Jakub Kasperski [6/11]", "Paweł Pilipczuk [11/11]", "Bartosz Trytytka [11/11]", "Jakub Piętko [11/11]", "Jan Włodarczyk [10/11]", "Szymon Frączek [12/11]"];
 
@@ -134,7 +134,7 @@ Freaky Maciej
         const image = './Bez_nazwy.jpg';
         await message.reply({files: [image]});
     }
-
+    /* !nwords command
     if (message.content.toLocaleLowerCase().startsWith('!nwords')) {
         let helloCount = 0;
         let targetUser = message.mentions.users.first() || message.author;
@@ -156,9 +156,12 @@ Freaky Maciej
 
         message.channel.send(`${targetUser.username} powiedział nworda ${helloCount} razy.`);
     }
+    */
+
     if (message.content.toLowerCase() === ':nerd:') {
         message.reply(':nerd: :repeat:');
     }
+    // !eval command =-=-=-
     if (message.content.startsWith('!eval')) {
         if ((message.author.id === '592017236361871363' && message.content.toLowerCase().includes('message')) || (message.author.id === '1076212139729092648' && message.content.toLowerCase().includes('message'))) return;
         const code = message.content.slice(6);
@@ -170,7 +173,71 @@ Freaky Maciej
         } catch (error) {
             message.channel.send(`\`\`\`js\n${error}\n\`\`\``);
         }
-        }
+    }
+
+   if (message.content.startsWith('!chesscom')) {
+    const msgArray = message.content.split(' '); //[!chesscom, arg, subArg]
+    const arg = msgArray[1];
+    const subArg = msgArray[2];
+    switch (arg) {
+        case 'profile' || 'player' || 'profil' || 'gracz':
+            const profres = (await fetch(`https://api.chess.com/pub/player/${subArg}`));
+            if (!res.ok) { message.reply(':x: błont'); return; }
+            const profdata = profres.json();
+            const profembed = new EmbedBuilder().setTitle('Profil Użytkownika').setThumbnail(data.avatar).addFields(
+                {
+                    name: 'Nazwa Użytkownika',
+                    value: data.username,
+                    inline: true
+                },
+                {
+                    name: 'Tytuł',
+                    value: data.title || 'Brak',
+                    inline: true
+                },
+                {
+                    name: 'Kraj',
+                    value: `${(fetch(data.country)).json().name} :flag_${(await fetch(data.country)).json().code.toLowerCase()}:}`,
+                    inline: false
+                },
+                {
+                    name: 'Ostatnio Online',
+                    value: `t:${data.last_online}:R`,
+                    inline: true
+                },
+                {
+                    name: 'Data dołączenia',
+                    value: `t:${data.joined}:D`,
+                    inline: true
+                },
+                {
+                    name: 'Dywizja',
+                    value: data.league
+                }
+            )
+            message.reply({embeds: [profembed]});
+            break;
+        case 'stats' || 'statistics' || 'staty' || 'statystyki':
+            const statres = await fetch(`https://api.chess.com/pub/player/${subArg}/stats`);
+            if (res.ok) { message.reply(':x: błont'); return; }
+            const statdata = statres.json();
+            const statembed = new EmbedBuilder().setTitle('Statystyki Gracza').setThumbnail(profdata.avatar).addFields(
+                {
+                    name: '<:bullet:1016772646882508870> Bullety',
+                    value: `Ostatnia Partia:\n\tRanking:${statdata.chess_bullet.last.rating}\n\t:Data: <t:${statdata.chess_bullet.last.date}:D>\nSzczyt:\n\tRanking: ${statdata.chess_bullet.best.rating}\n\tData: <t:${statdata.chess_bullet.best.date}:D>\n\t[Link Do Gry](${statdata.chess_bullet.best.game})\nWyniki:\n\tWygrane:${statdata.chess_bullet.record.win}:\n\tPrzegrane:${statdata.chess_bullet.record.loss}:\n\tRemisy:${statdata.chess_bullet.record.draw}`
+                },
+                {
+                    name: '<:blitz:1016772640054194216> Blitzy',
+                    value: `Ostatnia Partia:\n\tRanking:${statdata.chess_blitz.last.rating}\n\t:Data: <t:${statdata.chess_blitz.last.date}:D>\nSzczyt:\n\tRanking: ${statdata.chess_blitz.best.rating}\n\tData: <t:${statdata.chess_blitz.best.date}:D>\n\t[Link Do Gry](${statdata.chess_blitz.best.game})\nWyniki:\n\tWygrane:${statdata.chess_blitz.record.win}:\n\tPrzegrane:${statdata.chess_blitz.record.loss}:\n\tRemisy:${statdata.chess_blitz.record.draw}`
+                },
+                {
+                    name: '<:rapid:1016802313849012395> Blitzy',
+                    value: `Ostatnia Partia:\n\tRanking:${statdata.chess_rapid.last.rating}\n\t:Data: <t:${statdata.chess_rapid.last.date}:D>\nSzczyt:\n\tRanking: ${statdata.chess_rapid.best.rating}\n\tData: <t:${statdata.chess_rapid.best.date}:D>\n\t[Link Do Gry](${statdata.chess_rapid.best.game})\nWyniki:\n\tWygrane:${statdata.chess_rapid.record.win}:\n\tPrzegrane:${statdata.chess_rapid.record.loss}:\n\tRemisy:${statdata.chess_rapid.record.draw}`
+                },
+            )
+            break;
+    }
+   }
 });
 client.on('messageDelete', async message => {
     if (message.author.bot) return;
