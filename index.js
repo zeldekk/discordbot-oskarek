@@ -180,63 +180,90 @@ Freaky Maciej
     const arg = msgArray[1];
     const subArg = msgArray[2];
     switch (arg) {
-        case 'profile' || 'player' || 'profil' || 'gracz':
-            const profres = (await fetch(`https://api.chess.com/pub/player/${subArg}`));
-            if (!res.ok) { message.reply(':x: błont'); return; }
-            const profdata = profres.json();
-            const profembed = new EmbedBuilder().setTitle('Profil Użytkownika').setThumbnail(data.avatar).addFields(
+        case 'profil':
+            const profres = await fetch(`https://api.chess.com/pub/player/${subArg}`);
+            if (!profres.ok) { message.reply(':x: błont'); return; }
+            const profdata = await profres.json();
+            const countryres = await fetch(profdata.country);
+            const countrydata = await countryres.json();
+            const avatarUrl = profdata.avatar || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS1P_ahGnzn0M0nsKJzASMplSBNbzh6528og&s';
+            const profembed = new EmbedBuilder().setTitle('Profil Użytkownika').setThumbnail(avatarUrl).addFields(
                 {
                     name: 'Nazwa Użytkownika',
-                    value: data.username,
+                    value: profdata.username,
                     inline: true
                 },
                 {
                     name: 'Tytuł',
-                    value: data.title || 'Brak',
+                    value: profdata.title || 'Brak',
                     inline: true
                 },
                 {
-                    name: 'Kraj',
-                    value: `${(fetch(data.country)).json().name} :flag_${(await fetch(data.country)).json().code.toLowerCase()}:}`,
-                    inline: false
+                    name: "\n",
+                    value: "\n"
                 },
                 {
                     name: 'Ostatnio Online',
-                    value: `t:${data.last_online}:R`,
+                    value: `<t:${profdata.last_online}:R>`,
                     inline: true
                 },
                 {
                     name: 'Data dołączenia',
-                    value: `t:${data.joined}:D`,
+                    value: `<t:${profdata.joined}:D>`,
                     inline: true
                 },
                 {
+                    name: 'Kraj',
+                    value: `${countrydata.name} :flag_${countrydata.code.toLowerCase()}:`
+                },
+                {
                     name: 'Dywizja',
-                    value: data.league
+                    value: profdata.league || 'brak'
                 }
-            )
+            ).setColor('Random');
             message.reply({embeds: [profembed]});
             break;
-        case 'stats' || 'statistics' || 'staty' || 'statystyki':
+        case 'stats':
             const statres = await fetch(`https://api.chess.com/pub/player/${subArg}/stats`);
-            if (res.ok) { message.reply(':x: błont'); return; }
-            const statdata = statres.json();
-            const statembed = new EmbedBuilder().setTitle('Statystyki Gracza').setThumbnail(profdata.avatar).addFields(
+            if (!statres.ok) { message.reply(':x: błont'); return; }
+            const statdata = await statres.json();
+            const statembed = new EmbedBuilder().setTitle('Statystyki Gracza').addFields(
                 {
-                    name: '<:bullet:1016772646882508870> Bullety',
-                    value: `Ostatnia Partia:\n\tRanking:${statdata.chess_bullet.last.rating}\n\t:Data: <t:${statdata.chess_bullet.last.date}:D>\nSzczyt:\n\tRanking: ${statdata.chess_bullet.best.rating}\n\tData: <t:${statdata.chess_bullet.best.date}:D>\n\t[Link Do Gry](${statdata.chess_bullet.best.game})\nWyniki:\n\tWygrane:${statdata.chess_bullet.record.win}:\n\tPrzegrane:${statdata.chess_bullet.record.loss}:\n\tRemisy:${statdata.chess_bullet.record.draw}`
+                    name: 'Bullety',
+                    value: `Ostatnia Partia:\n Ranking:${statdata.chess_bullet.last.rating}\n Data: <t:${statdata.chess_bullet.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_bullet.best.rating}\n Data: <t:${statdata.chess_bullet.best.date}:D>\n [Link Do Gry](${statdata.chess_bullet.best.game})\nWyniki:\n Wygrane:${statdata.chess_bullet.record.win}\n Przegrane:${statdata.chess_bullet.record.loss}\n Remisy:${statdata.chess_bullet.record.draw}`
                 },
                 {
-                    name: '<:blitz:1016772640054194216> Blitzy',
-                    value: `Ostatnia Partia:\n\tRanking:${statdata.chess_blitz.last.rating}\n\t:Data: <t:${statdata.chess_blitz.last.date}:D>\nSzczyt:\n\tRanking: ${statdata.chess_blitz.best.rating}\n\tData: <t:${statdata.chess_blitz.best.date}:D>\n\t[Link Do Gry](${statdata.chess_blitz.best.game})\nWyniki:\n\tWygrane:${statdata.chess_blitz.record.win}:\n\tPrzegrane:${statdata.chess_blitz.record.loss}:\n\tRemisy:${statdata.chess_blitz.record.draw}`
+                    name: 'Blitzy',
+                    value: `Ostatnia Partia:\n Ranking:${statdata.chess_blitz.last.rating}\n Data: <t:${statdata.chess_blitz.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_blitz.best.rating}\n Data: <t:${statdata.chess_blitz.best.date}:D>\n [Link Do Gry](${statdata.chess_blitz.best.game})\nWyniki:\n\tWygrane:${statdata.chess_blitz.record.win}\n Przegrane:${statdata.chess_blitz.record.loss}\n Remisy:${statdata.chess_blitz.record.draw}`
                 },
                 {
-                    name: '<:rapid:1016802313849012395> Blitzy',
-                    value: `Ostatnia Partia:\n\tRanking:${statdata.chess_rapid.last.rating}\n\t:Data: <t:${statdata.chess_rapid.last.date}:D>\nSzczyt:\n\tRanking: ${statdata.chess_rapid.best.rating}\n\tData: <t:${statdata.chess_rapid.best.date}:D>\n\t[Link Do Gry](${statdata.chess_rapid.best.game})\nWyniki:\n\tWygrane:${statdata.chess_rapid.record.win}:\n\tPrzegrane:${statdata.chess_rapid.record.loss}:\n\tRemisy:${statdata.chess_rapid.record.draw}`
+                    name: 'Rapidy',
+                    value: `Ostatnia Partia:\n Ranking:${statdata.chess_rapid.last.rating}\n Data: <t:${statdata.chess_rapid.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_rapid.best.rating}\n Data: <t:${statdata.chess_rapid.best.date}:D>\n [Link Do Gry](${statdata.chess_rapid.best.game})\nWyniki:\n Wygrane:${statdata.chess_rapid.record.win}\n Przegrane:${statdata.chess_rapid.record.loss}\n Remisy:${statdata.chess_rapid.record.draw}`
                 },
-            )
+            ).setColor('Random');
+            message.reply({embeds: [statembed]});
             break;
-    }
+        case 'dailypuzzle':
+            const dPuzzleres = await fetch(`https://api.chess.com/pub/puzzle`);
+            if (!dPuzzleres.ok) { message.reply(':x: Coś poszło nie tak'); return; }
+            const dPuzzledata = await dPuzzleres.json();
+            if (dPuzzledata.pgn.includes('...')) {
+                message.reply(`Ruch [czarnych](${dPuzzledata.image})`);
+            } else {
+                message.reply(`Ruch [białych](${dPuzzledata.image})`);
+            }
+            break;
+            case 'randompuzzle':
+                const rPuzzleres = await fetch(`https://api.chess.com/pub/puzzle/random`);
+                if (!rPuzzleres.ok) { message.reply(':x: Coś poszło nie tak'); return; }
+                const rPuzzledata = await rPuzzleres.json();
+                if (rPuzzledata.pgn.includes('...')) {
+                    message.reply(`Ruch [czarnych](${rPuzzledata.image})`);
+                } else {
+                    message.reply(`Ruch [białych](${rPuzzledata.image})`);
+                }
+                break;
+        }
    }
 });
 client.on('messageDelete', async message => {
