@@ -33,6 +33,9 @@ client.on('messageCreate', async message => {
     if (message.content.toLowerCase() === 'https://tenor.com/view/cryptoflash-crypto-flash-tattoo-vintage-gif-27569875') {
         message.reply('to ty');
     }
+    if (message.content.toLowerCase().includes('sans')) {
+        message.reply('<:sansgranie:1283097393620975676>');
+    }
     if (message.content.toLowerCase().includes('maciej')) {
         const formattedText = `
 Freaky Maciej
@@ -134,7 +137,7 @@ Freaky Maciej
         const image = './Bez_nazwy.jpg';
         await message.reply({files: [image]});
     }
-    /* !nwords command
+    // !nwords command
     if (message.content.toLocaleLowerCase().startsWith('!nwords')) {
         let helloCount = 0;
         let targetUser = message.mentions.users.first() || message.author;
@@ -156,7 +159,7 @@ Freaky Maciej
 
         message.channel.send(`${targetUser.username} powiedział nworda ${helloCount} razy.`);
     }
-    */
+    
 
     if (message.content.toLowerCase() === ':nerd:') {
         message.reply(':nerd: :repeat:');
@@ -229,15 +232,15 @@ Freaky Maciej
             const statdata = await statres.json();
             const statembed = new EmbedBuilder().setTitle('Statystyki Gracza').addFields(
                 {
-                    name: 'Bullety',
+                    name: '<:bullet:1267249693163913246> Bullety',
                     value: `Ostatnia Partia:\n Ranking:${statdata.chess_bullet.last.rating}\n Data: <t:${statdata.chess_bullet.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_bullet.best.rating}\n Data: <t:${statdata.chess_bullet.best.date}:D>\n [Link Do Gry](${statdata.chess_bullet.best.game})\nWyniki:\n Wygrane:${statdata.chess_bullet.record.win}\n Przegrane:${statdata.chess_bullet.record.loss}\n Remisy:${statdata.chess_bullet.record.draw}`
                 },
                 {
-                    name: 'Blitzy',
+                    name: '<:blitz:1267249706334158910> Blitzy',
                     value: `Ostatnia Partia:\n Ranking:${statdata.chess_blitz.last.rating}\n Data: <t:${statdata.chess_blitz.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_blitz.best.rating}\n Data: <t:${statdata.chess_blitz.best.date}:D>\n [Link Do Gry](${statdata.chess_blitz.best.game})\nWyniki:\n\tWygrane:${statdata.chess_blitz.record.win}\n Przegrane:${statdata.chess_blitz.record.loss}\n Remisy:${statdata.chess_blitz.record.draw}`
                 },
                 {
-                    name: 'Rapidy',
+                    name: '<:rapid:1267249670078599228> Rapidy',
                     value: `Ostatnia Partia:\n Ranking:${statdata.chess_rapid.last.rating}\n Data: <t:${statdata.chess_rapid.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_rapid.best.rating}\n Data: <t:${statdata.chess_rapid.best.date}:D>\n [Link Do Gry](${statdata.chess_rapid.best.game})\nWyniki:\n Wygrane:${statdata.chess_rapid.record.win}\n Przegrane:${statdata.chess_rapid.record.loss}\n Remisy:${statdata.chess_rapid.record.draw}`
                 },
             ).setColor('Random');
