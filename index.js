@@ -34,7 +34,7 @@ client.on('messageCreate', async message => {
         message.reply('to ty');
     }
     if (message.content.toLowerCase().includes('sans')) {
-        message.reply('<:sansgranie:1283097393620975676>');
+        message.reply('<:sansgranie:1283097393620975676>'); 
     }
     if (message.content.toLowerCase().includes('maciej')) {
         const formattedText = `
@@ -270,7 +270,7 @@ Freaky Maciej
    }
 });
 client.on('messageDelete', async message => {
-    if (message.author.bot) return;
+    if (message.author.bot || message.author.id === '952296941339934720') return;
     const embed = new EmbedBuilder()
     .setAuthor({name: message.author.username, iconURL: message.author.avatarURL()})
     .setDescription(message.content || 'null')
@@ -280,7 +280,7 @@ client.on('messageDelete', async message => {
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
     if (oldMessage.content === newMessage.content) return;
-    if (oldMessage.author.bot) return;
+    if (oldMessage.author.bot || message.author.id === '952296941339934720') return;
 
     const embed = new EmbedBuilder()
         .setAuthor({
