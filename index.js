@@ -21,6 +21,18 @@ const bociki = ["Szymon Bialik [9/11]", "Justyna Czakańska [8/11]", "Karolina M
 
 client.on('messageCreate', async message => {
     if (message.author.bot) return;
+
+    const chance = Math.floor(Math.random() * 100);
+
+    if (chance === 23) {
+        message.reply('o-oł...');
+    } else if (chance === 64) {
+        message.reply('Heeeeeeeeej 👽');
+    } else if (chance === 45){
+        const heilhitler = './heilhitler.jpg';
+        message.reply({files: [heilhitler]})
+    }
+
     if (message.content.toLowerCase() === '<@1242565145410928640>') {
         message.reply('bocik'); 
     }
@@ -35,79 +47,6 @@ client.on('messageCreate', async message => {
     }
     if (message.content.toLowerCase().includes('sans')) {
         message.reply('<:sansgranie:1283097393620975676>'); 
-    }
-    if (message.content.toLowerCase().includes('maciej')) {
-        const formattedText = `
-Freaky Maciej
- Freaky Maciej
-  Freaky Maciej
-   Freaky Maciej
-    Freaky Maciej
-     Freaky Maciej
-      Freaky Maciej
-       Freaky Maciej
-        Freaky Maciej
-         Freaky Maciej
-          Freaky Maciej
-           Freaky Maciej
-            Freaky Maciej
-             Freaky Maciej
-              Freaky Maciej
-               Freaky Maciej
-                Freaky Maciej
-                 Freaky Maciej
-                  Freaky Maciej
-                   Freaky Maciej
-                    Freaky Maciej
-                     Freaky Maciej
-                    Freaky Maciej
-                   Freaky Maciej
-                  Freaky Maciej
-                 Freaky Maciej
-                Freaky Maciej
-               Freaky Maciej
-              Freaky Maciej
-             Freaky Maciej
-            Freaky Maciej
-           Freaky Maciej
-          Freaky Maciej
-         Freaky Maciej
-        Freaky Maciej
-       Freaky Maciej
-      Freaky Maciej
-     Freaky Maciej
-    Freaky Maciej
-   Freaky Maciej
-  Freaky Maciej
- Freaky Maciej
-Freaky Maciej
- Freaky Maciej
-  Freaky Maciej
-   Freaky Maciej
-    Freaky Maciej
-     Freaky Maciej
-      Freaky Maciej
-       Freaky Maciej
-        Freaky Maciej
-         Freaky Maciej
-          Freaky Maciej
-           Freaky Maciej
-            Freaky Maciej
-             Freaky Maciej
-              Freaky Maciej
-               Freaky Maciej
-                Freaky Maciej
-                 Freaky Maciej
-                  Freaky Maciej
-                   Freaky Maciej
-                    Freaky Maciej
-                     Freaky Maciej
-`;
-
-        const message2 = await message.reply(formattedText);
-        setTimeout(() => {
-            message2.delete();
-        }, 2500);
     }
     
     if (message.content.toLowerCase() === 'geo' || message.content.toLocaleLowerCase() === 'geometria') {
