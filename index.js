@@ -30,7 +30,7 @@ client.on('messageCreate', async message => {
         message.reply('Heeeeeeeeej 👽');
     } else if (chance === 45){
         const heilhitler = './heilhitler.jpg';
-        message.reply({files: [heilhitler]})
+        message.reply({files: [heilhitler]});
     }
 
     if (message.content.toLowerCase() === '<@1242565145410928640>') {
