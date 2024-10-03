@@ -21,16 +21,19 @@ const bociki = ["Szymon Bialik [9/11]", "Justyna Czakańska [8/11]", "Karolina M
 
 client.on('messageCreate', async message => {
     if (message.author.bot) return;
-
+    const heilhitler = './heilhitler.jpg';
     const chance = Math.floor(Math.random() * 100);
-
+    const ultraRareChance = Math.floor(Math.random() * 100000);
     if (chance === 23) {
         message.reply('o-oł...');
     } else if (chance === 64) {
         message.reply('Heeeeeeeeej 👽');
     } else if (chance === 45){
-        const heilhitler = './heilhitler.jpg';
         message.reply({files: [heilhitler]});
+    }
+
+    if (ultraRareChance === 42344) {
+        message.reply({content: 'o-oł...\nHeeeeej :alien:', files: [heilhitler]});
     }
 
     if (message.content.toLowerCase() === '<@1242565145410928640>') {
@@ -219,7 +222,7 @@ client.on('messageDelete', async message => {
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
     if (oldMessage.content === newMessage.content) return;
-    if (oldMessage.author.bot || message.author.id === '952296941339934720') return;
+    if (oldMessage.author.bot || oldMessage.author.id === '952296941339934720') return;
 
     const embed = new EmbedBuilder()
         .setAuthor({
