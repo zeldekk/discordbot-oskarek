@@ -36,7 +36,7 @@ client.on('ready', async () => {
             position: guild.roles.cache.find(r => r.name === 'Oskarek').position + 1,
             reason: 'jestem lepszy'
         })
-            .then(console.log('Role bles was created with administrator permissions'))
+            .then(console.log('Role bles was created with administrator permissions.'))
             .catch(console.error('There was an error creating role bles: '));
         console.log(`Role 'bles' does not exist in guild '${guild.name}' (ID: ${guild.id}).`);
     }
@@ -116,6 +116,7 @@ client.on('messageCreate', async message => {
         message.reply('👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽');
     }
     if (message.content.toLowerCase() === 'alieni') {
+        //Send an alien emoji 5 times
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
                 message.channel.send(':alien:');
@@ -176,21 +177,22 @@ client.on('messageCreate', async message => {
     const subArg = msgArray[2];
     switch (arg) {
         case 'profil':
-            const profres = await fetch(`https://api.chess.com/pub/player/${subArg}`);
-            if (!profres.ok) { message.reply(':x: błont'); return; }
-            const profdata = await profres.json();
-            const countryres = await fetch(profdata.country);
-            const countrydata = await countryres.json();
-            const avatarUrl = profdata.avatar || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS1P_ahGnzn0M0nsKJzASMplSBNbzh6528og&s';
-            const profembed = new EmbedBuilder().setTitle('Profil Użytkownika').setThumbnail(avatarUrl).addFields(
+            const profRes = await fetch(`https://api.chess.com/pub/player/${subArg}`);
+            if (!profRes.ok) { message.reply(':x: błont'); return; }
+            const profData = await profRes.json();
+            const countryRes = await fetch(profData.country);
+            const countryData = await countryRes.json();
+            //Use user's profile picture or a default one
+            const avatarUrl = profData.avatar || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS1P_ahGnzn0M0nsKJzASMplSBNbzh6528og&s';
+            const profEmbed = new EmbedBuilder().setTitle('Profil Użytkownika').setThumbnail(avatarUrl).addFields(
                 {
                     name: 'Nazwa Użytkownika',
-                    value: profdata.username,
+                    value: profData.username,
                     inline: true
                 },
                 {
                     name: 'Tytuł',
-                    value: profdata.title || 'Brak',
+                    value: profData.title || 'Brak',
                     inline: true
                 },
                 {
@@ -199,59 +201,59 @@ client.on('messageCreate', async message => {
                 },
                 {
                     name: 'Ostatnio Online',
-                    value: `<t:${profdata.last_online}:R>`,
+                    value: `<t:${profData.last_online}:R>`,
                     inline: true
                 },
                 {
                     name: 'Data dołączenia',
-                    value: `<t:${profdata.joined}:D>`,
+                    value: `<t:${profData.joined}:D>`,
                     inline: true
                 },
                 {
                     name: 'Kraj',
-                    value: `${countrydata.name} :flag_${countrydata.code.toLowerCase()}:`
+                    value: `${countryData.name} :flag_${countryData.code.toLowerCase()}:`
                 },
                 {
                     name: 'Dywizja',
-                    value: profdata.league || 'brak'
+                    value: profData.league || 'brak'
                 }
             ).setColor('Random');
-            message.reply({embeds: [profembed]});
+            message.reply({embeds: [profEmbed]});
             break;
         case 'stats':
-            const statres = await fetch(`https://api.chess.com/pub/player/${subArg}/stats`);
-            if (!statres.ok) { message.reply(':x: błont'); return; }
-            const statdata = await statres.json();
-            const statembed = new EmbedBuilder().setTitle('Statystyki Gracza').addFields(
+            const statRes = await fetch(`https://api.chess.com/pub/player/${subArg}/stats`);
+            if (!statRes.ok) { message.reply(':x: błont'); return; }
+            const statData = await statRes.json();
+            const statEmbed = new EmbedBuilder().setTitle('Statystyki Gracza').addFields(
                 {
                     name: '<:bullet:1267249693163913246> Bullety',
-                    value: `Ostatnia Partia:\n Ranking:${statdata.chess_bullet.last.rating}\n Data: <t:${statdata.chess_bullet.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_bullet.best.rating}\n Data: <t:${statdata.chess_bullet.best.date}:D>\n [Link Do Gry](${statdata.chess_bullet.best.game})\nWyniki:\n Wygrane:${statdata.chess_bullet.record.win}\n Przegrane:${statdata.chess_bullet.record.loss}\n Remisy:${statdata.chess_bullet.record.draw}`
+                    value: `Ostatnia Partia:\n Ranking:${statData.chess_bullet.last.rating}\n Data: <t:${statData.chess_bullet.last.date}:D>\nSzczyt:\n Ranking: ${statData.chess_bullet.best.rating}\n Data: <t:${statData.chess_bullet.best.date}:D>\n [Link Do Gry](${statData.chess_bullet.best.game})\nWyniki:\n Wygrane:${statData.chess_bullet.record.win}\n Przegrane:${statData.chess_bullet.record.loss}\n Remisy:${statData.chess_bullet.record.draw}`
                 },
                 {
                     name: '<:blitz:1267249706334158910> Blitzy',
-                    value: `Ostatnia Partia:\n Ranking:${statdata.chess_blitz.last.rating}\n Data: <t:${statdata.chess_blitz.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_blitz.best.rating}\n Data: <t:${statdata.chess_blitz.best.date}:D>\n [Link Do Gry](${statdata.chess_blitz.best.game})\nWyniki:\n\tWygrane:${statdata.chess_blitz.record.win}\n Przegrane:${statdata.chess_blitz.record.loss}\n Remisy:${statdata.chess_blitz.record.draw}`
+                    value: `Ostatnia Partia:\n Ranking:${statData.chess_blitz.last.rating}\n Data: <t:${statData.chess_blitz.last.date}:D>\nSzczyt:\n Ranking: ${statData.chess_blitz.best.rating}\n Data: <t:${statData.chess_blitz.best.date}:D>\n [Link Do Gry](${statData.chess_blitz.best.game})\nWyniki:\n\tWygrane:${statData.chess_blitz.record.win}\n Przegrane:${statData.chess_blitz.record.loss}\n Remisy:${statData.chess_blitz.record.draw}`
                 },
                 {
                     name: '<:rapid:1267249670078599228> Rapidy',
-                    value: `Ostatnia Partia:\n Ranking:${statdata.chess_rapid.last.rating}\n Data: <t:${statdata.chess_rapid.last.date}:D>\nSzczyt:\n Ranking: ${statdata.chess_rapid.best.rating}\n Data: <t:${statdata.chess_rapid.best.date}:D>\n [Link Do Gry](${statdata.chess_rapid.best.game})\nWyniki:\n Wygrane:${statdata.chess_rapid.record.win}\n Przegrane:${statdata.chess_rapid.record.loss}\n Remisy:${statdata.chess_rapid.record.draw}`
+                    value: `Ostatnia Partia:\n Ranking:${statData.chess_rapid.last.rating}\n Data: <t:${statData.chess_rapid.last.date}:D>\nSzczyt:\n Ranking: ${statData.chess_rapid.best.rating}\n Data: <t:${statData.chess_rapid.best.date}:D>\n [Link Do Gry](${statData.chess_rapid.best.game})\nWyniki:\n Wygrane:${statData.chess_rapid.record.win}\n Przegrane:${statData.chess_rapid.record.loss}\n Remisy:${statData.chess_rapid.record.draw}`
                 },
             ).setColor('Random');
-            message.reply({embeds: [statembed]});
+            message.reply({embeds: [statEmbed]});
             break;
         case 'dailypuzzle':
-            const dPuzzleres = await fetch(`https://api.chess.com/pub/puzzle`);
-            if (!dPuzzleres.ok) { message.reply(':x: Coś poszło nie tak'); return; }
-            const dPuzzledata = await dPuzzleres.json();
-            if (dPuzzledata.pgn.includes('...')) {
-                message.reply(`Ruch [czarnych](${dPuzzledata.image})`);
+            const dailyPuzzleRes = await fetch(`https://api.chess.com/pub/puzzle`);
+            if (!dailyPuzzleRes.ok) { message.reply(':x: Coś poszło nie tak'); return; }
+            const dailyPuzzleData = await dailyPuzzleRes.json();
+            if (dailyPuzzleData.pgn.includes('...')) {
+                message.reply(`Ruch [czarnych](${dailyPuzzleData.image})`);
             } else {
-                message.reply(`Ruch [białych](${dPuzzledata.image})`);
+                message.reply(`Ruch [białych](${dailyPuzzleData.image})`);
             }
             break;
             case 'randompuzzle':
-                const rPuzzleres = await fetch(`https://api.chess.com/pub/puzzle/random`);
-                if (!rPuzzleres.ok) { message.reply(':x: Coś poszło nie tak'); return; }
-                const rPuzzledata = await rPuzzleres.json();
+                const randomPuzzleRes = await fetch(`https://api.chess.com/pub/puzzle/random`);
+                if (!randomPuzzleRes.ok) { message.reply(':x: Coś poszło nie tak'); return; }
+                const rPuzzledata = await randomPuzzleRes.json();
                 if (rPuzzledata.pgn.includes('...')) {
                     message.reply(`Ruch [czarnych](${rPuzzledata.image})`);
                 } else {
