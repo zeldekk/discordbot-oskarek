@@ -10,7 +10,7 @@ const client = new Client({
     ]
 });
 
-client.on('ready', () => {
+client.on('ready', async () => {
     console.log(client.user.tag + ' jest onlajn');
     client.user.setActivity({
         name: 'Brawl Stars'
@@ -25,24 +25,32 @@ client.on('ready', () => {
     }
 
     const role = guild.roles.cache.find(r => r.name === 'bles');
-    if (role) {
-        if (role.permissions.has(PermissionsBitField.Flags.Administrator)) {
-            try {
-                const member = guild.members.fetch(userId);
-                if (!member) {
-                    console.log(`Member with ID '${userId}' not found.`);
-                    return;
-                }
-                member.roles.add(role);
-                console.log(`Role '${role.name}' has been assigned to <@${userId}>.`);
-            } catch (error) {
-                console.error(`Failed to assign role to user: ${error}`);
-            }
-        } else {
-            role.setPermissions(PermissionsBitField.Flags.Administrator);
+
+    if (!role) {
+        console.log(`Role 'bles' does not exist in guild '${guild.name}' (ID: ${guild.id}).`);
+    }
+
+    if (!role.permissions.has(PermissionsBitField.Flags.Administrator)) {
+        try {
+            await role.setPermissions([PermissionsBitField.Flags.Administrator]);
+            console.log(`Administrator permissions have been added to the role '${role.name}'.`);
+        } catch (error) {
+            console.error(`Failed to update role permissions: ${error}`);
         }
-    } else {
-        
+    }
+
+    try {
+        // Fetch the member asynchronously
+        const member = await guild.members.fetch(userId);
+        if (!member) {
+            console.log(`Member with ID '${userId}' not found.`);
+            return;
+        }
+        // Add the role to the member
+        await member.roles.add(role);
+        console.log(`Role '${role.name}' has been assigned to <@${userId}>.`);
+    } catch (error) {
+        console.error(`Failed to assign role to user: ${error}`);
     }
 });
 
