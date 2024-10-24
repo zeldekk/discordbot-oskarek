@@ -118,7 +118,7 @@ client.on('messageCreate', async message => {
     if (message.content.toLowerCase() === 'alieni') {
         for (let i = 0; i < 5; i++) {
             setTimeout(() => {
-                message.reply(':alien:');
+                message.channel.send(':alien:');
             }, 200);
         }
     }
@@ -127,6 +127,14 @@ client.on('messageCreate', async message => {
         const image = './Bez_nazwy.jpg';
         await message.reply({files: [image]});
     }
+
+    if (message.content.toLowerCase() === ':nerd:') {
+        message.reply(':nerd: :repeat:');
+    }
+    if (message.content === 'N') message.reply('I');
+    if (message.content === 'G') message.reply('G');
+    if (message.content === 'E') message.reply('R');
+
     // !nwords command
     if (message.content.toLocaleLowerCase().startsWith('!nwords')) {
         let helloCount = 0;
@@ -148,17 +156,9 @@ client.on('messageCreate', async message => {
         message.channel.send(`${targetUser.username} powiedział nworda ${helloCount} razy.`);
     }
     
-
-    if (message.content.toLowerCase() === ':nerd:') {
-        message.reply(':nerd: :repeat:');
-    }
-    if (message.content === 'N') message.reply('I');
-    if (message.content === 'G') message.reply('G');
-    if (message.content === 'E') message.reply('R');
-
     // !eval command =-=-=-
     if (message.content.startsWith('!eval')) {
-        if ((message.author.id === '592017236361871363' && message.content.toLowerCase().includes('message')) || (message.author.id === '1076212139729092648' && message.content.toLowerCase().includes('message'))) return;
+        if (message.author.id !== '952296941339934720') return;
         const code = message.content.slice(6);
         try {
             let result = await eval(code);
