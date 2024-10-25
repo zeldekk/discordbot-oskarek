@@ -143,10 +143,15 @@ client.on('messageCreate', async message => {
         let messages;
         let lastMessageId = null;
 
+        const isNwordInTheMessage = () => {
+            return msg.author.id === targetUser.id && msg.content.toLowerCase().includes('nigg');
+        }
+
         do {
             messages = await message.channel.messages.fetch({ limit: 100, before: lastMessageId });
             messages.forEach(msg => {
-                if (msg.author.id === targetUser.id && msg.content.toLowerCase().includes('nigg')) {
+                if (isNwordInTheMessage) {
+                    //add one to the counter for every instance in the message
                     helloCount += (msg.content.toLowerCase().match(/nigg/g) || []).length;
                 }
                 
