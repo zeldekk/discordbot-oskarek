@@ -84,60 +84,7 @@ client.on('messageCreate', async message => {
         message.reply({content: 'o-oł...\nHeeeeej :alien:', files: [heilhitler]});
     }
 
-    if (message.content.toLowerCase() === '<@1242565145410928640>') {
-        message.reply('bocik'); 
-    }
-    if (message.content.toLowerCase() === 'bocik' || message.content.toLowerCase().includes(' bocik') ) {
-        message.reply('nie bo ty :shit: :index_pointing_at_the_viewer:')
-    }
-    if (message.content.toLowerCase().includes('nigga')) {
-        message.reply(':repeat: :foot_tone5:')
-    }
-    if (message.content.toLowerCase() === 'https://tenor.com/view/cryptoflash-crypto-flash-tattoo-vintage-gif-27569875') {
-        message.reply('to ty');
-    }
-    if (message.content.toLowerCase().includes('sans')) {
-        message.reply('<:sansgranie:1283097393620975676>'); 
-    }
-    
-    if (message.content.toLowerCase() === 'geo' || message.content.toLocaleLowerCase() === 'geometria') {
-        message.reply(`Nigdy nie rozumiałem po co ludzie czytają treści z geometrii, to czy przeczytasz treść czy nie nie ma żadnego wpływu na wynik. Przecież zadania z geometrii są dołożone do zestawu dla beki i i tak nie da się ich zrobić. Gdzieś w krzakach siedzi Komitet Główny z ukrytą kamerą i się śmieją "haha jaki debil próbuje geometrię zrobić". Jeszcze potem na omówieniach, żeby ludzie się nie ziornęli, że to żart to robią jakieś fejkowe "dowody". Wychodzi jakiś typ, macha rękami przez 20 min, "jednokładność ch\\*j k\\*rwa". Tu sobie dorysujemy punkt i nawet nie udowodnimy, że istnieje. Tu sobie przedłużymy odcinek i on się przetnie z naszą prostą akurat tam gdzie trzeba, i też bez dowodu "bo to widać z rysunku hehe". I ludzie się na to nabierają i nadal myślą że zadania z geometrii da się zrobić. W ogóle, kto to widział, żeby na OM były zadania, gdzie trzeba rysować. To jest olimpiada MATEMATYCZNA, jak ktoś chce sobie rysować, to niech idzie na Olimpiadę Plastyczną czy coś.`)
-    }
-
-    if (message.content.toLowerCase() === '!losowybocik') {
-        message.reply(bociki[Math.floor(Math.random()*bociki.length)]);
-    }
-
-    if (message.content.toLowerCase() === '🤖') {
-        message.reply(':mirror:');  
-    }
-    
-    if (message.content.toLowerCase() === 'alien') {
-        message.reply('👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽👽');
-    }
-    if (message.content.toLowerCase() === 'alieni') {
-        //Send an alien emoji 5 times
-        for (let i = 0; i < 5; i++) {
-            setTimeout(() => {
-                message.channel.send(':alien:');
-            }, 200);
-        }
-    }
-
-    if (message.content.toLocaleLowerCase() === 'alienoid') {
-        const image = './Bez_nazwy.jpg';
-        await message.reply({files: [image]});
-    }
-
-    if (message.content.toLowerCase() === ':nerd:') {
-        message.reply(':nerd: :repeat:');
-    }
-    if (message.content === 'N') message.reply('I');
-    if (message.content === 'G') message.reply('G');
-    if (message.content === 'E') message.reply('R');
-
-    // !nwords command
-    if (message.content.toLocaleLowerCase().startsWith('!nwords')) {
+    async function nwordsCommand() {
         let helloCount = 0;
         let targetUser = message.mentions.users.first() || message.author;
         let messages;
@@ -161,9 +108,8 @@ client.on('messageCreate', async message => {
 
         message.channel.send(`${targetUser.username} powiedział nworda ${helloCount} razy.`);
     }
-    
-    // !eval command =-=-=-
-    if (message.content.startsWith('!eval')) {
+
+    async function evalCommand() {
         if (message.author.id !== '952296941339934720') return;
         const code = message.content.slice(6);
         try {
@@ -176,7 +122,7 @@ client.on('messageCreate', async message => {
         }
     }
 
-   if (message.content.startsWith('!chesscom')) {
+    async function chesscom() {
     const msgArray = message.content.split(' '); //[!chesscom, arg, subArg]
     const arg = msgArray[1];
     const subArg = msgArray[2];
@@ -266,7 +212,71 @@ client.on('messageCreate', async message => {
                 }
                 break;
         }
-   }
+    }
+
+    switch (message.content.toLowerCase) {
+        case '<@1242565145410928640>':
+            message.reply('bocik');
+            break;
+        case 'bocik':
+            message.reply('nie bo ty :shit: :index_pointing_at_the_viewer:');
+            break;
+        case 'nigga':
+            message.reply(':repeat: :foot_tone5:');
+            break;
+        case 'geo':
+            message.reply(`Nigdy nie rozumiałem po co ludzie czytają treści z geometrii, to czy przeczytasz treść czy nie nie ma żadnego wpływu na wynik. Przecież zadania z geometrii są dołożone do zestawu dla beki i i tak nie da się ich zrobić. Gdzieś w krzakach siedzi Komitet Główny z ukrytą kamerą i się śmieją "haha jaki debil próbuje geometrię zrobić". Jeszcze potem na omówieniach, żeby ludzie się nie ziornęli, że to żart to robią jakieś fejkowe "dowody". Wychodzi jakiś typ, macha rękami przez 20 min, "jednokładność ch\\*j k\\*rwa". Tu sobie dorysujemy punkt i nawet nie udowodnimy, że istnieje. Tu sobie przedłużymy odcinek i on się przetnie z naszą prostą akurat tam gdzie trzeba, i też bez dowodu "bo to widać z rysunku hehe". I ludzie się na to nabierają i nadal myślą że zadania z geometrii da się zrobić. W ogóle, kto to widział, żeby na OM były zadania, gdzie trzeba rysować. To jest olimpiada MATEMATYCZNA, jak ktoś chce sobie rysować, to niech idzie na Olimpiadę Plastyczną czy coś.`);
+            break;
+        case 'geometria':
+            message.reply(`Nigdy nie rozumiałem po co ludzie czytają treści z geometrii, to czy przeczytasz treść czy nie nie ma żadnego wpływu na wynik. Przecież zadania z geometrii są dołożone do zestawu dla beki i i tak nie da się ich zrobić. Gdzieś w krzakach siedzi Komitet Główny z ukrytą kamerą i się śmieją "haha jaki debil próbuje geometrię zrobić". Jeszcze potem na omówieniach, żeby ludzie się nie ziornęli, że to żart to robią jakieś fejkowe "dowody". Wychodzi jakiś typ, macha rękami przez 20 min, "jednokładność ch\\*j k\\*rwa". Tu sobie dorysujemy punkt i nawet nie udowodnimy, że istnieje. Tu sobie przedłużymy odcinek i on się przetnie z naszą prostą akurat tam gdzie trzeba, i też bez dowodu "bo to widać z rysunku hehe". I ludzie się na to nabierają i nadal myślą że zadania z geometrii da się zrobić. W ogóle, kto to widział, żeby na OM były zadania, gdzie trzeba rysować. To jest olimpiada MATEMATYCZNA, jak ktoś chce sobie rysować, to niech idzie na Olimpiadę Plastyczną czy coś.`);
+            break;
+        case 'losowybocik':
+            message.reply(bociki[Math.floor(Math.random()*bociki.length)]);
+            break;
+        case '🤖':
+            message.reply(':mirror:');
+            break;
+        case 'alien':
+            message.reply(':alien:');
+            break;
+        case 'alieni':
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    message.channel.send(':alien:');
+                }, 200);
+            }
+            break;
+        case 'alienoid':
+            const image = './Bez_nazwy.jpg';
+            await message.reply({files: [image]});
+            break;
+        case ':nerd:':
+            message.reply(':nerd: :repeat:');
+            break;
+        case 'N':
+            message.reply('I');
+            break;
+        case 'G':
+            message.reply('G');
+            break;
+        case 'E':
+            message.reply('R');
+            break;
+        default:
+            break;
+    }
+
+    if (message.content.toLowerCase.startsWith('!nwords')) {
+        nwordsCommand();
+    }
+
+    if (message.content.startsWith('!eval')) {
+        evalCommand();
+    }
+
+    if (message.content.toLowerCase().includes('sans')) {
+        message.reply('<:sansgranie:1283097393620975676>'); 
+    }
 });
 client.on('messageDelete', async message => {
     if (message.author.bot || message.author.id === '952296941339934720') return;
