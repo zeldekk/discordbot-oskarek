@@ -85,28 +85,28 @@ client.on('messageCreate', async message => {
     }
 
     async function nwordsCommand() {
-        let helloCount = 0;
+        let nwordCount = 0;
         let targetUser = message.mentions.users.first() || message.author;
         let messages;
         let lastMessageId = null;
 
         const isNwordInTheMessage = () => {
-            return msg.author.id === targetUser.id && msg.content.toLowerCase().includes('nigg');
+            return message.author.id === targetUser.id && message.content.toLowerCase().includes('nigg');
         }
 
         do {
             messages = await message.channel.messages.fetch({ limit: 100, before: lastMessageId });
             messages.forEach(msg => {
-                if (isNwordInTheMessage) {
+                if (isNwordInTheMessage()) {
                     //add one to the counter for every instance in the message
-                    helloCount += (msg.content.toLowerCase().match(/nigg/g) || []).length;
+                    nwordCount += (msg.content.toLowerCase().match(/nigg/g) || []).length;
                 }
                 
             });
             lastMessageId = messages.size > 0 ? messages.last().id : null;
         } while (messages.size > 0);
 
-        message.channel.send(`${targetUser.username} powiedział nworda ${helloCount} razy.`);
+        message.channel.send(`${targetUser.username} powiedział nworda ${nwordCount} razy.`);
     }
 
     async function evalCommand() {
