@@ -266,7 +266,7 @@ client.on('messageCreate', async message => {
             break;
     }
 
-    if (message.content.toLowerCase.startsWith('!nwords')) {
+    if (message.content.toLowerCase().startsWith('!nwords')) {
         nwordsCommand();
     }
 
