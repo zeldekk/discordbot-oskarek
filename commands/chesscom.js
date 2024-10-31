@@ -1,4 +1,4 @@
-async function chesscom() {
+module.exports = async function chesscom(message) {
     const msgArray = message.content.split(' '); //[!chesscom, arg, subArg]
     const arg = msgArray[1];
     const subArg = msgArray[2];
@@ -9,7 +9,6 @@ async function chesscom() {
             const profData = await profRes.json();
             const countryRes = await fetch(profData.country);
             const countryData = await countryRes.json();
-            //Use user's profile picture or a default one
             const avatarUrl = profData.avatar || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQS1P_ahGnzn0M0nsKJzASMplSBNbzh6528og&s';
             const profEmbed = new EmbedBuilder().setTitle('Profil Użytkownika').setThumbnail(avatarUrl).addFields(
                 {
@@ -77,17 +76,15 @@ async function chesscom() {
                 message.reply(`Ruch [białych](${dailyPuzzleData.image})`);
             }
             break;
-            case 'randompuzzle':
-                const randomPuzzleRes = await fetch(`https://api.chess.com/pub/puzzle/random`);
-                if (!randomPuzzleRes.ok) { message.reply(':x: Coś poszło nie tak'); return; }
-                const rPuzzledata = await randomPuzzleRes.json();
-                if (rPuzzledata.pgn.includes('...')) {
-                    message.reply(`Ruch [czarnych](${rPuzzledata.image})`);
-                } else {
-                    message.reply(`Ruch [białych](${rPuzzledata.image})`);
-                }
-                break;
-        }
+        case 'randompuzzle':
+            const randomPuzzleRes = await fetch(`https://api.chess.com/pub/puzzle/random`);
+            if (!randomPuzzleRes.ok) { message.reply(':x: Coś poszło nie tak'); return; }
+            const rPuzzledata = await randomPuzzleRes.json();
+            if (rPuzzledata.pgn.includes('...')) {
+                message.reply(`Ruch [czarnych](${rPuzzledata.image})`);
+            } else {
+                message.reply(`Ruch [białych](${rPuzzledata.image})`);
+            }
+            break;
     }
-
-    module.exports = { chesscom }
+}

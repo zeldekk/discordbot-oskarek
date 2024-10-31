@@ -1,4 +1,6 @@
-async function evalCommand() {
+const { EmbedBuilder } = require('discord.js');
+
+module.exports = async function evalCommand(message) {
     if (message.author.id !== '952296941339934720') return;
     const code = message.content.slice(6);
     try {
@@ -10,5 +12,3 @@ async function evalCommand() {
         message.channel.send(`\`\`\`js\n${error}\n\`\`\``);
     }
 }
-
-module.exports = { evalCommand }

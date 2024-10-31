@@ -1,4 +1,4 @@
-async function nwordsCommand() {
+module.exports = async function nwordsCommand(message) {
     let nwordCount = 0;
     let targetUser = message.mentions.users.first() || message.author;
     let messages;
@@ -22,5 +22,3 @@ async function nwordsCommand() {
 
     message.channel.send(`${targetUser.username} powiedział nworda ${nwordCount} razy.`);
 }
-
-module.exports = { nwordsCommand }

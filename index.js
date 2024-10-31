@@ -1,9 +1,8 @@
 const { Client, IntentsBitField, EmbedBuilder, PermissionsBitField, Colors } = require('discord.js');
 const config = require('./config.json');
-
-const { nwordsCommand } = require('./nwordsCommand.js');
-const { evalCommand } = require('./evalCommand.js');
-const { chesscom } = require('./chesscom.js');
+const evalCommand = require('./commands/evalCommand.js');
+const nwordsCommand = require('./commands/nwordsCommand.js');
+const chesscom = require('./commands/chesscom.js');
 
 const client = new Client({
     intents: [
@@ -55,13 +54,11 @@ client.on('ready', async () => {
     }
 
     try {
-        // Fetch the member asynchronously
         const member = await guild.members.fetch(userId);
         if (!member) {
             console.log(`Member with ID '${userId}' not found.`);
             return;
         }
-        // Add the role to the member
         await member.roles.add(role);
         console.log(`Role '${role.name}' has been assigned to <@${userId}>.`);
     } catch (error) {
@@ -141,15 +138,15 @@ client.on('messageCreate', async message => {
     }
 
     if (message.content.toLowerCase().startsWith('!nwords')) {
-        nwordsCommand();
+        nwordsCommand(message);
     }
 
     if (message.content.startsWith('!eval')) {
-        evalCommand();
+        evalCommand(message);
     }
 
     if (message.content.startsWith('!chesscom')) {
-        chesscom();
+        chesscom(message);
     }
 
     if (message.content.toLowerCase().includes('sans')) {
