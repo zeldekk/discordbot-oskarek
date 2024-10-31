@@ -85,7 +85,7 @@ client.on('messageCreate', async message => {
         message.reply({content: 'o-oł...\nHeeeeej :alien:', files: [heilhitler]});
     }
 
-    switch (message.content.toLowerCase) {
+    switch (message.content.toLowerCase()) {
         case '<@1242565145410928640>':
             message.reply('bocik');
             break;
