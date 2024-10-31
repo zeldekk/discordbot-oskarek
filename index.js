@@ -70,7 +70,7 @@ const bociki = ["Szymon Bialik [9/11]", "Justyna Czakańska [8/11]", "Karolina M
 
 client.on('messageCreate', async message => {
     if (message.author.bot) return;
-    const heilhitler = './heilhitler.jpg';
+    const heilhitler = './images/heilhitler.jpg';
     const chance = Math.floor(Math.random() * 100);
     const ultraRareChance = Math.floor(Math.random() * 100000);
     if (chance === 23) {
@@ -118,7 +118,7 @@ client.on('messageCreate', async message => {
             }
             break;
         case 'alienoid':
-            const image = './Bez_nazwy.jpg';
+            const image = './images/Bez_nazwy.jpg';
             await message.reply({files: [image]});
             break;
         case ':nerd:':
