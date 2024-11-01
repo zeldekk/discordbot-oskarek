@@ -1,24 +1,24 @@
-module.exports = async function nwordsCommand(message) {
+module.exports = async function helloCount(message) {
     let nwordCount = 0;
-    let targetUser = message.mentions.users.first() || message.author;
-    let messages;
+    const targetUser = message.mentions.users.first() || message.author;
     let lastMessageId = null;
 
-    const isNwordInTheMessage = () => {
-        return message.author.id === targetUser.id && message.content.toLowerCase().includes('nigg');
-    }
+    const isHelloInMessage = (msg) => {
+        return msg.author.id === targetUser.id && msg.content.toLowerCase().includes('nigg');
+    };
 
     do {
-        messages = await message.channel.messages.fetch({ limit: 100, before: lastMessageId });
+        let messages = await message.channel.messages.fetch({ limit: 100, before: lastMessageId });
+        
         messages.forEach(msg => {
-            if (isNwordInTheMessage()) {
-                //add one to the counter for every instance in the message
+            if (isHelloInMessage(msg)) {
                 nwordCount += (msg.content.toLowerCase().match(/nigg/g) || []).length;
             }
-            
         });
-        lastMessageId = messages.size > 0 ? messages.last().id : null;
-    } while (messages.size > 0);
 
-    message.channel.send(`${targetUser.username} powiedział nworda ${nwordCount} razy.`);
-}
+        lastMessageId = messages.size > 0 ? messages.last().id : null;
+
+    } while (lastMessageId);
+
+    return message.reply(`${targetUser.username} powiedzial nworda ${nwordCount} razy.`);
+};
