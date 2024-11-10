@@ -121,21 +121,25 @@ client.on('messageCreate', async message => {
             const image = './images/Bez_nazwy.jpg';
             await message.reply({files: [image]});
             break;
-        case ':nerd:':
+        case '🤓':
             message.reply(':nerd: :repeat:');
             break;
-        case 'N':
-            message.reply('I');
+        case 'n':
+            message.reply('i');
             break;
-        case 'G':
-            message.reply('G');
+        case 'g':
+            message.reply('g');
             break;
-        case 'E':
-            message.reply('R');
+        case 'e':
+            message.reply('r');
             break;
         default:
             break;
     }
+
+    /*if (message.content.toLowerCase() === 'weronika' || message.content.toLowerCase() === 'kalisz' || message.content.toLowerCase() === 'weronika kalisz') {
+        message.reply("<@662187858286870560> kiedy się jej spytasz o wiadomo co?");
+    }*/
 
     if (message.content.toLowerCase().startsWith('!nwords')) {
         nwordsCommand(message);
