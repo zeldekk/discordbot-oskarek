@@ -24,6 +24,7 @@ module.exports = async function helloCount(message) {
 
     if (chance === 743) {
         message.reply('Ta osoba powiedziała na tyle n-wordów, że licznik jest poza skalą.');
+        return;
     }
 
     return message.reply(`${targetUser.username} powiedzial nworda ${nwordCount} razy.`);
