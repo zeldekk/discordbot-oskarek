@@ -20,5 +20,11 @@ module.exports = async function helloCount(message) {
 
     } while (lastMessageId);
 
+    const chance = Math.floor(Math.random() * 1000);
+
+    if (chance === 743) {
+        message.reply('Ta osoba powiedziała na tyle n-wordów, że licznik jest poza skalą.');
+    }
+
     return message.reply(`${targetUser.username} powiedzial nworda ${nwordCount} razy.`);
 };
