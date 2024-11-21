@@ -95,9 +95,6 @@ client.on('messageCreate', async message => {
         case 'nigga':
             message.reply(':repeat: :foot_tone5:');
             break;
-        case 'geo':
-            message.reply(`Nigdy nie rozumiałem po co ludzie czytają treści z geometrii, to czy przeczytasz treść czy nie nie ma żadnego wpływu na wynik. Przecież zadania z geometrii są dołożone do zestawu dla beki i i tak nie da się ich zrobić. Gdzieś w krzakach siedzi Komitet Główny z ukrytą kamerą i się śmieją "haha jaki debil próbuje geometrię zrobić". Jeszcze potem na omówieniach, żeby ludzie się nie ziornęli, że to żart to robią jakieś fejkowe "dowody". Wychodzi jakiś typ, macha rękami przez 20 min, "jednokładność ch\\*j k\\*rwa". Tu sobie dorysujemy punkt i nawet nie udowodnimy, że istnieje. Tu sobie przedłużymy odcinek i on się przetnie z naszą prostą akurat tam gdzie trzeba, i też bez dowodu "bo to widać z rysunku hehe". I ludzie się na to nabierają i nadal myślą że zadania z geometrii da się zrobić. W ogóle, kto to widział, żeby na OM były zadania, gdzie trzeba rysować. To jest olimpiada MATEMATYCZNA, jak ktoś chce sobie rysować, to niech idzie na Olimpiadę Plastyczną czy coś.`);
-            break;
         case 'geometria':
             message.reply(`Nigdy nie rozumiałem po co ludzie czytają treści z geometrii, to czy przeczytasz treść czy nie nie ma żadnego wpływu na wynik. Przecież zadania z geometrii są dołożone do zestawu dla beki i i tak nie da się ich zrobić. Gdzieś w krzakach siedzi Komitet Główny z ukrytą kamerą i się śmieją "haha jaki debil próbuje geometrię zrobić". Jeszcze potem na omówieniach, żeby ludzie się nie ziornęli, że to żart to robią jakieś fejkowe "dowody". Wychodzi jakiś typ, macha rękami przez 20 min, "jednokładność ch\\*j k\\*rwa". Tu sobie dorysujemy punkt i nawet nie udowodnimy, że istnieje. Tu sobie przedłużymy odcinek i on się przetnie z naszą prostą akurat tam gdzie trzeba, i też bez dowodu "bo to widać z rysunku hehe". I ludzie się na to nabierają i nadal myślą że zadania z geometrii da się zrobić. W ogóle, kto to widział, żeby na OM były zadania, gdzie trzeba rysować. To jest olimpiada MATEMATYCZNA, jak ktoś chce sobie rysować, to niech idzie na Olimpiadę Plastyczną czy coś.`);
             break;
@@ -136,10 +133,10 @@ client.on('messageCreate', async message => {
         default:
             break;
     }
-
-    /*if (message.content.toLowerCase() === 'weronika' || message.content.toLowerCase() === 'kalisz' || message.content.toLowerCase() === 'weronika kalisz') {
-        message.reply("<@662187858286870560> kiedy się jej spytasz o wiadomo co?");
-    }*/
+    
+    if (message.content.toLowerCase().includes('sans')) {
+        message.reply('<:sansgranie:1283097393620975676>'); 
+    }
 
     if (message.content.toLowerCase().startsWith('!nwords')) {
         nwordsCommand(message);
@@ -151,10 +148,6 @@ client.on('messageCreate', async message => {
 
     if (message.content.startsWith('!chesscom')) {
         chesscom(message);
-    }
-
-    if (message.content.toLowerCase().includes('sans')) {
-        message.reply('<:sansgranie:1283097393620975676>'); 
     }
 });
 client.on('messageDelete', async message => {
