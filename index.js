@@ -161,7 +161,7 @@ client.on('messageDelete', async message => {
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
     if (oldMessage.content === newMessage.content) return;
-    if (message.author.bot || message.author.id === '952296941339934720' || message.author.id === '544594311627538443' || message.author.id === '711947999831523349') return;
+    if (oldMessage.author.bot || oldMessage.author.id === '952296941339934720' || oldMessage.author.id === '544594311627538443' || oldMessage.author.id === '711947999831523349') return;
 
     const embed = new EmbedBuilder()
         .setAuthor({
