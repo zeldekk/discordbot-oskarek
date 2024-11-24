@@ -1,6 +1,8 @@
 const evalCommand = require('../commands/evalCommand.js');
 const nwordsCommand = require('../commands/nwordsCommand.js');
 const chesscom = require('../commands/chesscom.js');
+const incrementNwordCount = require('../util/incrementNwordCount.js');
+const fs = require('fs');
 
 module.exports = async function messageCreate(message) {
     if (message.author.bot) return;
@@ -84,5 +86,9 @@ module.exports = async function messageCreate(message) {
 
     if (message.content.startsWith('!chesscom')) {
         chesscom(message);
+    }
+
+    if (message.content.toLowerCase().includes('nigg') || message.content.toLowerCase().includes('nyg') || message.content.toLowerCase().includes('czarnuch')) {
+        incrementNwordCount(message.author.id);
     }
 }
