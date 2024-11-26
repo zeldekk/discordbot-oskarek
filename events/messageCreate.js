@@ -89,6 +89,7 @@ module.exports = async function messageCreate(message) {
     }
 
     if (message.content.toLowerCase().includes('nigg') || message.content.toLowerCase().includes('nyg') || message.content.toLowerCase().includes('czarnuch')) {
-        incrementNwordCount(message.author.id);
+        const numberOfNwords = message.content.match(/nigg|nyg|czarnuch/gi).length;
+        incrementNwordCount(message.author.id, numberOfNwords);
     }
 }
