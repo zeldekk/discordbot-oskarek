@@ -1,9 +1,9 @@
 const readNwordCount = require('../util/readNwordCount.js');
 
-module.exports = async function helloCount(message) {
-    const nwordCount = readNwordCount(message.author.id);
-
+module.exports = async function nwordsCount(message) {
     const targetUser = message.mentions.users.first() || message.author;
+
+    const nwordCount = readNwordCount(targetUser.id);
 
     const chance = Math.floor(Math.random() * 1000);
 
